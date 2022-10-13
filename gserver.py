@@ -48,6 +48,7 @@ class Game:
 
         self.player1.collidelist.add(*self.platforms.sprites())
         self.player2.collidelist.add(*self.platforms.sprites())
+        self.all_objects.add(*self.platforms.sprites() ,self.player1 , self.player2)
 
         self.running = True
     def update(self) :
@@ -57,8 +58,10 @@ class Game:
     def mainloop(self) :
         while self.running :
             self.update()
+            print(self.player1.actions , self.player2.actions , sep='____' * 10 )
 
 
-game = Game(rect_list)
+if __name__ == '__main__':
+    game = Game(rect_list)
 
-game.mainloop()
+    game.mainloop()

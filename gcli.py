@@ -114,12 +114,15 @@ class Game:
                 parcel = DataParcel(self)
                 parcel.MakeParcel()
 
+                ### TODO Send the above Parcel to the server and get back data and intergrate it here
 
             # print(self.player1.name ,self.player1.other_player_name )
             # print(self.player2.name ,self.player2.other_player_name )
 
 
-game = Game(rect_list)
+if __name__ == '__main__':
 
-game.mainloop()
-# g = Game()
+    game = Game(rect_list)
+
+    game.mainloop()
+    # g = Game()

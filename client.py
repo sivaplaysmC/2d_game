@@ -1,36 +1,31 @@
+from time import sleep
 import pygame
 import socket
 from _thread import start_new_thread as start_thread
 from pickle import loads as ls , dumps as ds
+from reading_json import rect_list
+from gcli import Game
+from port import p
 
 
-win = pygame.display.set_mode((500,500) , pygame.RESIZABLE)
-win.fill('teal')
-clock = pygame.time.Clock()
-
-running = 1
 
 sock = socket.socket()
 events = []
+game = Game(rect_list)
+sock.connect(p)
 
-
-
+data = {'self' : game.player1 , 'other' : game.player2 }
 def speak() :
-    sock.connect(('localhost', 9090))
-    Id = ls(sock.recv(1024))
+    sleep(1.0)
+    print('Hi There')
+    Id :int = ls(sock.recv(1024))
     while 1 :
-        print(Id)
-        sock.send(ds(events))
-        (ls(sock.recv(1024)))
+        data = {'Id' : Id , 'player1' : game.player1 , 'player2' : game.player2 , }
+        sock.send(ds(data))
+        data = (ls(sock.recv(10240)))
+        game.player1 = data['player1']
+        game.player2 = data['player2']
 
 
 start_thread(speak , tuple())
-while running :
-    events = []
-    clock.tick(60)
-    for event in pygame.event.get() :
-        if event.type == pygame.QUIT :
-            quit()
-        if event.type == pygame.KEYDOWN :
-            events.append(event.type)
-    pygame.display.flip()
+game.mainloop()

@@ -56,10 +56,14 @@ class Game:
         self.running = True
         # self.game_state_stack.add(mini(self))
         self.game_state_stack.add(Main_menu(self))
-    def dt_clock(self) :
-        self.now = time()
-        self.dt =  self.now - self.prev
-        self.prev = self.now
+
+
+
+        self.cur_id = 0
+
+
+
+
     def get_input(self) :
         for self.event in pygame.event.get() :
             if self.event.type == pygame.QUIT :

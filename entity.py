@@ -31,7 +31,7 @@ class Entity(pygame.sprite.Sprite) :
         self.move_left_key  = pygame.K_LEFT
         self.jump_key = pygame.K_SPACE
 
-        self.rect = pygame.Rect((0,0) , ( 50,50 ))
+        self.rect = pygame.Rect((0,0) , ( 30,30 ))
         self.rect.x = 226
         self.rect.y = 470
         self.hitx , self.hity = list() , list()
@@ -64,11 +64,8 @@ class Entity(pygame.sprite.Sprite) :
         self.rect.x = round(self.px)
         hitx = pygame.sprite.spritecollide(self,self.collidelist, False)
         if hitx :
-            # print(hitx[0].name)
             if hitx[0].name == self.other_player_name :
-                print('Haha')
                 hitx[0].rect.move_ip(self.delpos.x , 0)
-                self.rect.x = hitx[0].rect.left
             if self.delpos.x > 0 :
                 self.rect.right = hitx[0].rect.left
             if self.delpos.x < 0 :
@@ -80,11 +77,7 @@ class Entity(pygame.sprite.Sprite) :
         self.delpos.y = self.velocity.y + (0.5 * self.acceleration.y)
         self.rect.y += self.delpos.y
         hity = pygame.sprite.spritecollide(self, self.collidelist, False)
-        # print(hity)
         if hity :
-            if hity[0].name == self.other_player_name :
-                print('Haha')
-                hity[0].rect.move_ip(0 , self.delpos.y)
             if self.delpos.y > 0 :
                 self.velocity.y = 0
                 self.rect.bottom = hity[0].rect.top
@@ -96,6 +89,3 @@ class Entity(pygame.sprite.Sprite) :
         self.get_input()
         self.horizontal_movement(dt)
         self.vertical_movement(dt)
-        print(self.name)
-    def debug(self) :
-        print(self.rect.topleft , self.position , self.velocity , self.acceleration , sep = "\t")
