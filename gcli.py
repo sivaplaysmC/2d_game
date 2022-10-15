@@ -25,12 +25,12 @@ class Res:
 
 
 class Game:
+    environment_surface_res = Res(1280,720)
+    display_surface_res = Res(1408 , 736)
     def __init__(self , rect_list:list) :
         self.game_state_stack = Stack()
         self.environment_surface_res = Res(1280,720)
         self.display_surface_res = Res(1408 , 736)
-        self.environment =  pygame.Surface((self.environment_surface_res.x , self.environment_surface_res.y))
-        self.display = pygame.display.set_mode((self.display_surface_res.x , self.display_surface_res.y))
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.prev = 0
@@ -100,25 +100,34 @@ class Game:
         self.game_state_stack.peek().update()
 
     def draw(self) :
-        self.display.blit(pygame.transform.scale(self.environment , (self.display_surface_res.x , self.display_surface_res.y)) , (0,0) )
+        ENVIRONMENT.fill('teal')
+        for i in self.platforms :
+            PLATFORM = pygame.Surface((i.width , i.height))
+            PLATFORM.fill(i.color)
+            ENVIRONMENT.blit(PLATFORM , (i.rect.x , i.rect.y))
+        PLAYER_1_IMAGE = pygame.Surface((30,30))
+        PLAYER_1_IMAGE.fill(self.player1.color)
+        PLAYER_2_IMAGE = pygame.Surface((30,30))
+        PLAYER_2_IMAGE.fill(self.player2.color)
+        ENVIRONMENT.blit(PLAYER_1_IMAGE , (self.player1.rect.x , self.player1.rect.y))
+        ENVIRONMENT.blit(PLAYER_2_IMAGE , (self.player2.rect.x , self.player2.rect.y))
+        DISPLAY.blit(pygame.transform.scale(ENVIRONMENT , (self.display_surface_res.x , self.display_surface_res.y)) , (0,0) )
         pygame.display.flip()
     def mainloop(self) :
-        undumped  = 1
         while self.running :
             self.fps = self.clock.get_fps()
             self.dt = self.clock.tick(60) / 1000
             self.get_input()
             self.update()
             self.draw()
-            if undumped :
-                parcel = DataParcel(self)
-                parcel.MakeParcel()
 
                 ### TODO Send the above Parcel to the server and get back data and intergrate it here
 
             # print(self.player1.name ,self.player1.other_player_name )
             # print(self.player2.name ,self.player2.other_player_name )
 
+ENVIRONMENT =  pygame.Surface(( Game.display_surface_res.x , Game.display_surface_res.y  ))
+DISPLAY = pygame.display.set_mode((Game.display_surface_res.x , Game.display_surface_res.y))
 
 if __name__ == '__main__':
 

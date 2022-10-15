@@ -2,7 +2,6 @@ import socket
 from socket import SOCK_STREAM as SS , AF_INET as AA
 from pickle import loads as ls , dumps as ds
 from _thread import start_new_thread as snt
-from reading_json import rect_list
 
 from port import p
 
@@ -17,26 +16,14 @@ addresses = list()
 ##events = list()
 clients = [ None , None ]
 
-game = Game(rect_list)
-
 def thred(conn : socket.socket , Id ) :
     print(Id)
     fh = open("log.txt" , "w")
     conn.send(ds(Id))
     while 1 :
         data = ls(conn.recv(10240))
-        if Id == 0 :
-            game.player1 = data['player1']
-        else :
-            game.player2 = data['player1']
-
-        if Id == 0 :
-            parcel = {'player1' : game.player1 , 'player2' : game.player2}
-            conn.send(ds(parcel))
-
-        if Id == 1 :
-            parcel = {'player1' : game.player2 , 'player2' : game.player1}
-            conn.send(ds(parcel))
+        clients[Id] = data
+        conn.send(ds( clients[Id - 1] ))
 
 
 cur_id = 0
@@ -49,7 +36,6 @@ def mainloop() :
         addresses.append(a)
         snt(thred , (c , cur_id))
         cur_id += 1
-    game.mainloop()
 
 
 mainloop()

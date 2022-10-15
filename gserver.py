@@ -27,6 +27,8 @@ class Game:
         self.display_surface_res = Res(1408 , 736)
         self.rect_list = rect_list
 
+        self.trash = "Hi "
+
         self.player1 = Entity("blue")
         self.player1.name = "Player1"
 
@@ -58,7 +60,8 @@ class Game:
     def mainloop(self) :
         while self.running :
             self.update()
-            print(self.player1.actions , self.player2.actions , sep='____' * 10 )
+            # print(self.player1.actions , self.player2.actions , sep='____' * 10 )
+            print(self.trash)
 
 
 if __name__ == '__main__':
