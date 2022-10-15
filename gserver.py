@@ -1,3 +1,4 @@
+from time import clock_getres
 import pygame
 from reading_json import rect_list
 from entity import Platform,  Entity
@@ -26,6 +27,8 @@ class Game:
         self.environment_surface_res = Res(1280,720)
         self.display_surface_res = Res(1408 , 736)
         self.rect_list = rect_list
+
+        self.clock = pygame.time.Clock()
 
         self.player1 = Entity("blue")
         self.player1.name = "Player1"
@@ -57,8 +60,9 @@ class Game:
 
     def mainloop(self) :
         while self.running :
+            self.clock.tick(60)
             self.update()
-            print(self.player1.actions , self.player2.actions , sep='____' * 10 )
+            print(self.player1.rect.topleft , self.player2.rect.topleft , sep='____' * 10 )
 
 
 if __name__ == '__main__':

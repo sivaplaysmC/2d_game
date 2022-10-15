@@ -103,17 +103,12 @@ class Game:
         self.display.blit(pygame.transform.scale(self.environment , (self.display_surface_res.x , self.display_surface_res.y)) , (0,0) )
         pygame.display.flip()
     def mainloop(self) :
-        undumped  = 1
         while self.running :
             self.fps = self.clock.get_fps()
             self.dt = self.clock.tick(60) / 1000
             self.get_input()
             self.update()
             self.draw()
-            if undumped :
-                parcel = DataParcel(self)
-                parcel.MakeParcel()
-
                 ### TODO Send the above Parcel to the server and get back data and intergrate it here
 
             # print(self.player1.name ,self.player1.other_player_name )

@@ -2,6 +2,7 @@ import socket
 from socket import SOCK_STREAM as SS , AF_INET as AA
 from pickle import loads as ls , dumps as ds
 from _thread import start_new_thread as snt
+from data_parcel import DataParcel
 from reading_json import rect_list
 
 from port import p
@@ -26,16 +27,17 @@ def thred(conn : socket.socket , Id ) :
     while 1 :
         data = ls(conn.recv(10240))
         if Id == 0 :
-            game.player1 = data['player1']
+            game.player1 = data.player1
         else :
-            game.player2 = data['player1']
+            game.player2 = data.player1
 
         if Id == 0 :
-            parcel = {'player1' : game.player1 , 'player2' : game.player2}
+            parcel = DataParcel(game)
             conn.send(ds(parcel))
 
         if Id == 1 :
-            parcel = {'player1' : game.player2 , 'player2' : game.player1}
+            parcel = DataParcel(game)
+            parcel.player1 , parcel.player2 = parcel.player2 , parcel.player1
             conn.send(ds(parcel))
 
 
