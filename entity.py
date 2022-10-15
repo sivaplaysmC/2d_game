@@ -43,6 +43,7 @@ class Entity(pygame.sprite.Sprite) :
         self.do_gravity = True
         self.max_acceleration = 4
         self.mul = 0
+        self.alive = 1
 
     def get_input(self) :
 
@@ -89,3 +90,4 @@ class Entity(pygame.sprite.Sprite) :
         self.get_input()
         self.horizontal_movement(dt)
         self.vertical_movement(dt)
+

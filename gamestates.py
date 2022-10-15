@@ -34,7 +34,12 @@ class Main_menu(GameState) :
         super().__init__(Game)
         self.name = "Main"
     def update(self) :
-        basic.update(self)
+        pass
+
+
+class DeathScreen(GameState) :
+    def __init__(self, Game):
+        super().__init__(Game)
 
 
 class basic(GameState):
